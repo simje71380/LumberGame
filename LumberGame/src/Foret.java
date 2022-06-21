@@ -1,6 +1,7 @@
 
 public class Foret extends Parcelle{
 	private int stockage_interne;
+	private int temps_prod;
 	
 	public Foret(int parcelle_id) {
 		//do stuff

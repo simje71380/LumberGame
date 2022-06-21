@@ -1,4 +1,4 @@
 
-public class Usine {
-
+public class Usine extends Parcelle{
+	
 }
