@@ -11,6 +11,7 @@ public class Player_data { //ressource critique
 	public Ecorceuse ecor[];
 	public Scie_A_Ruban scie[];
 	public Conditionnement cond;
+	public Foret foret[];
 	public int argent; //argent du joueur
 	public int bois;  //bois produit par foret
 	public int rondin;  //produit a partir de bois via écorceuse
@@ -27,6 +28,7 @@ public class Player_data { //ressource critique
 		Get_Ecor_Data();
 		Get_Fend_Data();
 		Get_Scie_Data();
+		Get_Foret_Data();
 	};
 	
 	public void Get_P_Data() {
@@ -99,6 +101,12 @@ public class Player_data { //ressource critique
 		fend = new Fendage[3];
 		for(int i=0; i<3;++i) {
 			fend[i] = new Fendage(i);
+		}
+	}
+	public void Get_Foret_Data() {
+		foret = new Foret[9];
+		for(int i=0; i<9;++i) {
+			foret[i] = new Foret(i);
 		}
 	}
 	
@@ -182,6 +190,12 @@ public class Player_data { //ressource critique
 		}
 		for(int i=0; i<3;++i) {
 			scie[i].save_data();
+		}
+		for(int i=0; i<3;++i) {
+			scie[i].save_data();
+		}
+		for(int i=0; i<9;++i) {
+			foret[i].save_data();
 		}
 	};
 

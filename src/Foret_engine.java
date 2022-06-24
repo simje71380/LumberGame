@@ -1,16 +1,19 @@
-import java.io.*;
-public class Engine extends Thread {
+package GameData;
+
+public class Foret_engine {
 	private Player_data player;
 	private int parcelle;
-	public Engine(Player_data player, int parcelle_id) {
+	private GameWindow gw;
+	public Foret_engine(Player_data player, int parcelle_id, GameWindow gw) {
 		this.player = player;
 		parcelle = parcelle_id;
+		this.gw = gw;
 		Thread t = new Thread(this);
 		t.start();
 	}
 	
 	public void run() {
-		while(true) {
+		while(gw.continu) {
 			//do stuff
 			player.argent++;
 			try {
