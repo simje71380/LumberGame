@@ -1,11 +1,10 @@
 import java.util.concurrent.TimeUnit;
 
-
-public class Foret_engine implements Runnable{
+public class Poncage_engine implements Runnable {
 	private Player_data player;
 	private int parcelle;
 	private GameWindow gw;
-	public Foret_engine(Player_data player, int parcelle_id, GameWindow gw) {
+	public Poncage_engine(Player_data player, int parcelle_id, GameWindow gw) {
 		this.player = player;
 		parcelle = parcelle_id;
 		this.gw = gw;
@@ -21,12 +20,14 @@ public class Foret_engine implements Runnable{
 		}
 		while(gw.continu) {
 			try {
-				long cooldown = (long)player.foret[parcelle].temps_prod;
+				long cooldown = (long)player.ponc[parcelle].temps_prod;
 				//ajout benefice du resp sur le cooldown
 				TimeUnit.SECONDS.sleep(cooldown);
-				if(player.foret[parcelle].GetNiveau() != 0) {
-					player.add_bois(1);
-					System.out.println("bois produit par parcelle : " + String.valueOf(parcelle));
+				if(player.ponc[parcelle].GetNiveau() != 0 && player.planche_non_poncee > 0) {
+					player.remove_planche_non_poncee(1);
+					player.add_planche(1);
+					player.add_money(player.ponc[parcelle].GetRentabilite());
+					System.out.println("planche produit par parcelle : " + String.valueOf(parcelle));
 				}
 				
 			}

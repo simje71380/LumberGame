@@ -6,12 +6,13 @@ import java.util.Scanner;
 public class Foret extends Parcelle{
 	private int stockage_interne;
 	private int niveau;
-	private float temps_prod;
+	public float temps_prod;
 	private int parcelle_id;
 	
-	public Foret(int parcelle_id) {
+	public Foret(Player_data player, int parcelle_id, GameWindow gw) {
 		//do stuff
 		this.stockage_interne = 10;
+		this.temps_prod = 10;
 		this.parcelle_id = parcelle_id;
 		try {
 			File getCSVFiles = new File("GameData/foret.csv");
@@ -39,7 +40,13 @@ public class Foret extends Parcelle{
 			temps_prod *= 0.95;
 		}
 	}
-	
+	public int GetNiveau() {
+		return this.niveau;
+	}
+	public void LvlUp() {
+		this.niveau++;
+		temps_prod *= 0.95;
+	}
 	public int GetStockageInterne() {
 		return this.stockage_interne;
 	}

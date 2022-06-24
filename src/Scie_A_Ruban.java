@@ -6,15 +6,15 @@ import java.util.Scanner;
 public class Scie_A_Ruban extends Usine {
 	private int niveau;
 	private double vitesse;
-	private double rentabilite;
+	private int rentabilite;
 	private int stockage_interne_avant;
 	private int stockage_interne_arriere;
 	private int parcelle_id;
+	public float temps_prod = 10;
 	
 	public Scie_A_Ruban(int parcelle_id) {
 		this.niveau = 0;
 		this.vitesse = 10;
-		this.rentabilite = 10.0;
 		this.stockage_interne_avant = 10;
 		this.stockage_interne_arriere = 10;
 		this.parcelle_id = parcelle_id;
@@ -30,7 +30,7 @@ public class Scie_A_Ruban extends Usine {
 	        	if(parts[0].equals(String.valueOf(parcelle_id))) {
 		        	
 		        	vitesse = Float.parseFloat(parts[1]);
-		        	rentabilite = Float.parseFloat(parts[2]);
+		        	rentabilite = Integer.parseInt(parts[2]);
 		        	stockage_interne_avant = Integer.parseInt(parts[3]);
 		        	stockage_interne_arriere = Integer.parseInt(parts[4]);
 		        	niveau = Integer.parseInt(parts[5]);
@@ -42,6 +42,9 @@ public class Scie_A_Ruban extends Usine {
 		catch(IOException e) {
 			System.out.print("failed to open file");
 			System.out.print(e);
+		}
+		for(int i=0; i<niveau; i++) {
+			temps_prod *= 0.95;
 		}
 	}
 	
@@ -95,6 +98,12 @@ public class Scie_A_Ruban extends Usine {
 		    }
 	};
 	
+	public void LevelUp() {
+		this.niveau++;
+		this.temps_prod *=0.95;
+		this.rentabilite++;
+	}
+	
 	public void SetNiveau(int val) {
 		this.niveau = val;
 	}
@@ -123,10 +132,10 @@ public class Scie_A_Ruban extends Usine {
 		return this.stockage_interne_avant;
 	}
 	
-	public void SetRentabilite(double val) {
+	public void SetRentabilite(int val) {
 		this.rentabilite = val;
 	}
-	public double GetRentabilite() {
+	public int GetRentabilite() {
 		return this.rentabilite;
 	}
 }

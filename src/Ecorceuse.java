@@ -6,14 +6,15 @@ import java.util.Scanner;
 public class Ecorceuse extends Usine {
 	private int niveau;
 	private double vitesse;
-	private double rentabilite;
+	private int rentabilite;
 	private int stockage_interne;
 	private int parcelle_id;
+	public float temps_prod = 10;
 	
 	public Ecorceuse(int parcelle_id) {
 		this.niveau = 0;
 		this.vitesse = 10;
-		this.rentabilite = 10.0;
+		this.rentabilite = 10;
 		this.stockage_interne = 10;
 		this.parcelle_id = parcelle_id;
 		try {
@@ -28,7 +29,7 @@ public class Ecorceuse extends Usine {
 	        	if(parts[0].equals(String.valueOf(parcelle_id))) {
 		        	
 		        	vitesse = Float.parseFloat(parts[1]);
-		        	rentabilite = Float.parseFloat(parts[2]);
+		        	rentabilite = Integer.parseInt(parts[2]);
 		        	stockage_interne = Integer.parseInt(parts[3]);
 		        	niveau = Integer.parseInt(parts[4]);
 		        	break;
@@ -40,6 +41,15 @@ public class Ecorceuse extends Usine {
 			System.out.print("failed to open file");
 			System.out.print(e);
 		}
+		for(int i=0;i<niveau;i++) {
+			temps_prod *= 0.95;
+		}
+	}
+	
+	public void LevelUp() {
+		this.niveau++;
+		this.temps_prod *=0.95;
+		this.rentabilite++;
 	}
 	
 	public void SetNiveau(int val) {
@@ -63,10 +73,10 @@ public class Ecorceuse extends Usine {
 		return this.stockage_interne;
 	}
 	
-	public void SetRentabilite(double val) {
+	public void SetRentabilite(int val) {
 		this.rentabilite = val;
 	}
-	public double GetRentabilite() {
+	public int GetRentabilite() {
 		return this.rentabilite;
 	}
 	

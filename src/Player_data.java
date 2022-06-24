@@ -12,16 +12,19 @@ public class Player_data { //ressource critique
 	public Scie_A_Ruban scie[];
 	public Conditionnement cond;
 	public Foret foret[];
+	public Foret_engine f_eng[];
 	public int argent; //argent du joueur
 	public int bois;  //bois produit par foret
 	public int rondin;  //produit a partir de bois via écorceuse
 	public int poutre;  //produit a partir de rondins via fendage
 	public int planche_non_poncee; //produit a partir de poutre via scie a ruban
 	public int planche; //produit a partir de planche non poncées vie poncage
+	public GameWindow gw;
 	
 	
-	public Player_data(int nb_parcelles){
+	public Player_data(int nb_parcelles, GameWindow gw){
 		nb_parcelle = nb_parcelles;
+		this.gw = gw;
 		Get_P_Data();
 		Get_Resp_Data();
 		Get_Poncage_Data();
@@ -83,30 +86,41 @@ public class Player_data { //ressource critique
 		ponc = new Poncage[3];
 		for(int i=0; i<3;++i) {
 			ponc[i] = new Poncage(i);
+			Thread t = new Thread(new Poncage_engine(this, i, gw));
+			t.start();
 		}
 	}
 	public void Get_Ecor_Data() {
 		ecor = new Ecorceuse[3];
 		for(int i=0; i<3;++i) {
 			ecor[i] = new Ecorceuse(i);
+			Thread t = new Thread(new Ecorceuse_engine(this, i, gw));
+			t.start();
 		}
 	}
 	public void Get_Scie_Data() {
 		scie = new Scie_A_Ruban[3];
 		for(int i=0;i<3;++i) {
 			scie[i] = new Scie_A_Ruban(i);
+			Thread t = new Thread(new Scie_A_Ruban_engine(this, i, gw));
+			t.start();
 		}
 	}
 	public void Get_Fend_Data() {
 		fend = new Fendage[3];
 		for(int i=0; i<3;++i) {
 			fend[i] = new Fendage(i);
+			Thread t = new Thread(new Fendage_engine(this, i, gw));
+			t.start();
 		}
 	}
 	public void Get_Foret_Data() {
 		foret = new Foret[9];
+		f_eng = new Foret_engine[9];
 		for(int i=0; i<9;++i) {
-			foret[i] = new Foret(i);
+			foret[i] = new Foret(this, i, gw);
+			Thread t = new Thread(new Foret_engine(this, i, gw));
+			t.start();
 		}
 	}
 	
@@ -235,4 +249,41 @@ public class Player_data { //ressource critique
 			return false;
 		}
 	}
+	synchronized public void add_planche_non_poncee(int nombre) {
+		planche_non_poncee+=nombre;
+	}
+	synchronized public boolean remove_planche_non_poncee(int nombre) {
+		if(planche_non_poncee >= nombre) {
+			planche_non_poncee -= nombre;
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	synchronized public void add_rondin(int nombre) {
+		rondin+=nombre;
+	}
+	synchronized public boolean remove_rondin(int nombre) {
+		if(rondin >= nombre) {
+			rondin-=nombre;
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	synchronized public void add_poutre(int nombre) {
+		poutre+=nombre;
+	}
+	synchronized public boolean remove_poutre(int nombre) {
+		if(poutre >= nombre) {
+			poutre-=nombre;
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 }

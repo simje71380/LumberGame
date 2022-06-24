@@ -36,13 +36,14 @@ public class GameWindow {
 	private JPanel panel_vehicule;
 	private JPanel panel_vente;
 	private JPanel panel_responsable;
-	private static Player_data Player = new Player_data(10); //10 = nb de parcelles total
+	private Player_data Player = new Player_data(10, this); //10 = nb de parcelles total
 	private JButton btnAmeliorerBucheron;
 	private JButton btnRecruterBucheron;
 	private JButton btnAmeliorerPlanteur;
 	private JButton btnRecruterPlanteur;
 	private JButton btnParcelle;
 	private JLabel labelBucheron;
+	public boolean continu = true;
 
 	/**
 	 * Launch the application.
@@ -61,8 +62,6 @@ public class GameWindow {
 				}
 			}
 		});
-		
-		Engine game_eng = new Engine(Player, 1);
 		
 	}
 
@@ -152,6 +151,7 @@ public class GameWindow {
 		frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+            	continu = false;
             	Player.save_data();
                 System.exit(0);
             }

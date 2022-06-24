@@ -1,11 +1,11 @@
 import java.util.concurrent.TimeUnit;
 
-
-public class Foret_engine implements Runnable{
+public class Scie_A_Ruban_engine implements Runnable{
+	
 	private Player_data player;
 	private int parcelle;
 	private GameWindow gw;
-	public Foret_engine(Player_data player, int parcelle_id, GameWindow gw) {
+	public Scie_A_Ruban_engine(Player_data player, int parcelle_id, GameWindow gw) {
 		this.player = player;
 		parcelle = parcelle_id;
 		this.gw = gw;
@@ -21,12 +21,15 @@ public class Foret_engine implements Runnable{
 		}
 		while(gw.continu) {
 			try {
-				long cooldown = (long)player.foret[parcelle].temps_prod;
+				long cooldown = (long)player.scie[parcelle].temps_prod;
 				//ajout benefice du resp sur le cooldown
 				TimeUnit.SECONDS.sleep(cooldown);
-				if(player.foret[parcelle].GetNiveau() != 0) {
-					player.add_bois(1);
-					System.out.println("bois produit par parcelle : " + String.valueOf(parcelle));
+				if(player.scie[parcelle].GetNiveau() != 0 && player.poutre > 0) {
+					player.remove_poutre(1);
+					player.add_planche_non_poncee(1);
+					player.add_money(player.scie[parcelle].GetRentabilite());
+					
+					System.out.println("planche_non_poncee produit par parcelle : " + String.valueOf(parcelle));
 				}
 				
 			}

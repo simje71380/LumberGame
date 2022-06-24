@@ -1,4 +1,4 @@
-parcelle_id;niveau;vitesse;
-0;0;0.0
-0;0;0.0
-0;0;0.0
+parcelle_id;niveau;vitesse;rentabilite
+0;0;0.0;10
+1;1;0.0;10
+2;0;0.0;10

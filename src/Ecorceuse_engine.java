@@ -1,11 +1,10 @@
 import java.util.concurrent.TimeUnit;
 
-
-public class Foret_engine implements Runnable{
+public class Ecorceuse_engine implements Runnable {
 	private Player_data player;
 	private int parcelle;
 	private GameWindow gw;
-	public Foret_engine(Player_data player, int parcelle_id, GameWindow gw) {
+	public Ecorceuse_engine(Player_data player, int parcelle_id, GameWindow gw) {
 		this.player = player;
 		parcelle = parcelle_id;
 		this.gw = gw;
@@ -21,12 +20,14 @@ public class Foret_engine implements Runnable{
 		}
 		while(gw.continu) {
 			try {
-				long cooldown = (long)player.foret[parcelle].temps_prod;
+				long cooldown = (long)player.ecor[parcelle].temps_prod;
 				//ajout benefice du resp sur le cooldown
 				TimeUnit.SECONDS.sleep(cooldown);
-				if(player.foret[parcelle].GetNiveau() != 0) {
-					player.add_bois(1);
-					System.out.println("bois produit par parcelle : " + String.valueOf(parcelle));
+				if(player.ecor[parcelle].GetNiveau() != 0 && player.bois > 0) {
+					player.add_rondin(1);
+					player.remove_bois(1);
+					player.add_money(player.ecor[parcelle].GetRentabilite());
+					System.out.println("rondin produit par parcelle : " + String.valueOf(parcelle));
 				}
 				
 			}
@@ -36,3 +37,4 @@ public class Foret_engine implements Runnable{
 		}
 	}
 }
+

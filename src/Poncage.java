@@ -7,6 +7,8 @@ public class Poncage extends Usine {
 	private int niveau;
 	private double vitesse;
 	private int parcelle_id;
+	private int rentabilite;
+	public float temps_prod = 10;
 	
 	public Poncage(int parcelle_id) {
 		this.niveau = 0;
@@ -25,6 +27,7 @@ public class Poncage extends Usine {
 	        	if(parts[0].equals(String.valueOf(parcelle_id))) {
 		        	niveau = Integer.parseInt(parts[1]);
 		        	vitesse = Float.parseFloat(parts[2]);
+		        	rentabilite = Integer.parseInt(parts[3]);
 		        	break;
 	        	}
 	        }
@@ -33,6 +36,9 @@ public class Poncage extends Usine {
 		catch(IOException e) {
 			System.out.print("failed to open file");
 			System.out.print(e);
+		}
+		for(int i=0; i<niveau; i++) {
+			temps_prod *= 0.95;
 		}
 	}
 	
@@ -48,6 +54,10 @@ public class Poncage extends Usine {
 	}
 	public void SetVitesse(double val) {
 		this.vitesse = val;
+	}
+	
+	public int GetRentabilite() {
+		return this.rentabilite;
 	}
 	
 	public void save_data(){
@@ -67,6 +77,8 @@ public class Poncage extends Usine {
 		        	data += String.valueOf(niveau);
 		        	data += ";";
 		        	data += String.valueOf(vitesse);
+		        	data += ";";
+		        	data += String.valueOf(rentabilite);
 		        	data += "\n";
 	        	}
 	        	else {
